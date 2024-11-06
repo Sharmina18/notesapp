@@ -10,6 +10,7 @@ const NoteCard = ({
     onDelete,
     onPinNote
 }) => {
+  
   // Function to trim content
   const trimContent = (content) => {
     const words = content.split(' ');

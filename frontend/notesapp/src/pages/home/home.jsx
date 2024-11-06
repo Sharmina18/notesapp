@@ -22,6 +22,12 @@ export const Home = () => {
     data: null
   });
 
+  const [openNote, setOpenNote] = useState({
+    isShown: false,
+    data: null
+});
+
+  const [allNotes, setAllNotes] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
 
@@ -31,7 +37,6 @@ export const Home = () => {
       const response = await axiosInstance.get("/get-user");
       if (response.data && response.data.user) {
         setUserInfo(response.data.user);
-        console.log(userInfo);
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -41,14 +46,25 @@ export const Home = () => {
     }
   };
 
-  useEffect(() => {
-    getUserInfo();
-    return () => {
+  const getAllNotes = async () => {
+    try {
+      const response = await axiosInstance.get("/get-all-notes");
+      if (response.data && response.data.notes) {
+        setAllNotes(response.data.notes);
+      }
+    } catch (error) {
+      console.log("Error while fetching notes:", error);
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    getAllNotes();
+    getUserInfo();
+  }, [navigate, axiosInstance]);
 
   useEffect(() => {
     console.log("User info updated:", userInfo);
+    console.log("All notes updated:", allNotes);
   }, [userInfo]);
 
   return (
@@ -60,27 +76,47 @@ export const Home = () => {
 
         <div 
           className='container mx-auto' 
-          onClick={() => setOpenEditNote({
-              isShown: true,
-              type: "add",
-              data: null
-        })}>
-
+        >
           <div className='grid grid-cols-3 gap-4 mt-8'>
-            <NoteCard
-                title='Note Title'
-                date='2021-09-01'
-                content='Note Content Note Content Note Content Note Content Note Content'
-                tags='Note Tags'
-                isPinned={true}
-                onEdit={() => console.log('Edit')}
-                onDelete={() => console.log('Delete')}
-                onPinNote={() => console.log('Pin Note')}
-            />
+          {allNotes.map((note) => (
+              <NoteCard
+                  key={note._id}
+                  title={note.title}
+                  date={note.createdAt}
+                  content={note.content}
+                  isPinned={note.isPinned}
+                  onEdit={() => setOpenEditNote({ isShown: true, type: "edit", data: note })}
+                  onDelete={() => console.log('Delete', note._id)}
+                  onPinNote={() => console.log('Pin Note', note._id)}
+                  onClick={() => setOpenNote({ isShown: true, data: note })}
+              />
+          ))}
           </div>
+
         </div>
 
-       
+        <Modal
+            isOpen={openNote.isShown}
+            onRequestClose={() => setOpenNote({ isShown: false, data: null })}
+            style={{
+                overlay: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                },
+            }}
+            contentLabel="Note Details"
+            className="flex items-center justify-center h-full"
+        >
+            <div className="w-[40%] max-h-[90vh] bg-white p-5 overflow-y-auto rounded-lg shadow-lg">
+                {openNote.data && (
+                    <div>
+                        <h2 className="text-2xl font-semibold">{openNote.data.title}</h2>
+                        <p className="text-gray-600">{new Date(openNote.data.createdAt).toLocaleDateString()}</p>
+                        <p className="mt-4">{openNote.data.content}</p>
+                    </div>
+                )}
+            </div>
+        </Modal>
+    
         <Modal
           isOpen={openEditNote.isShown}
           onRequestClose={() => setOpenEditNote({ isShown: false, type: "add", data: null })} 
