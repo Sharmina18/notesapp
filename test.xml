@@ -1,0 +1,110 @@
+<mxfile host="app.diagrams.net" modified="2025-05-29T12:00:00.000Z" agent="ChatGPT" version="20.5.5" etag="12345">
+  <diagram id="physical-inv-dfd" name="Physical Inventory DFD">
+    <mxGraphModel dx="1024" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- External Entities -->
+        <mxCell id="2" value="Warehouse Staff&#10;(Counters)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="160" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="8" value="Finance Staff&#10;(Approvers)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="260" width="160" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="3" value="Lynx ERP&#10;Master Data" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="400" y="40" width="160" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="7" value="ERP Inventory DB&#10;& Reports" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="400" y="260" width="160" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Processes / Data Store -->
+        <mxCell id="4" value="P1: Scan &amp; Validate&#10;• Extract: GTIN, Expiry,&#10;  Lot/Serial, MFG Date&#10;• Validate against Master" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="220" y="40" width="160" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="5" value="D1: PDA Local Store&#10;• ItemCode, CountedQty&#10;• Timestamp, UserID&#10;• Comments, Flags" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="220" y="180" width="160" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="6" value="P2: Finance Review&#10;• Load count data&#10;• Edit quantities&#10;• Add comments&#10;• Approve for sync" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;" vertex="1" parent="1">
+          <mxGeometry x="220" y="340" width="160" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="9" value="P3: Sync to ERP&#10;• FinalCounts&#10;• ApprovalFlag" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="1">
+          <mxGeometry x="400" y="340" width="160" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- Data Flows -->
+        <mxCell id="10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="2" target="4">
+          <mxGeometry relative="1" as="geometry"/>
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;" vertex="1" connectable="0" parent="10">
+            <mxGeometry x="-0.1" y="-0.3" relative="1" as="geometry"/>
+            <mxCell value="Scan Data: GTIN, Expiry, Lot/Serial, MFG Date" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="10">
+              <mxGeometry x="0.5" y="-0.3" relative="1" as="geometry"/>
+            </mxCell>
+          </mxCell>
+        </mxCell>
+
+        <mxCell id="11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="3" target="4">
+          <mxGeometry relative="1" as="geometry"/>
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;" vertex="1" connectable="0" parent="11">
+            <mxGeometry x="-0.1" y="-0.3" relative="1" as="geometry"/>
+            <mxCell value="Master Data: ItemCode, Desc, UOM, ExpQty" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="11">
+              <mxGeometry x="0.5" y="-0.3" relative="1" as="geometry"/>
+            </mxCell>
+          </mxCell>
+        </mxCell>
+
+        <mxCell id="12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="4" target="5">
+          <mxGeometry relative="1" as="geometry"/>
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;" vertex="1" connectable="0" parent="12">
+            <mxGeometry x="0" y="-0.2" relative="1" as="geometry"/>
+            <mxCell value="Validated Record" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="12">
+              <mxGeometry x="0.5" y="-0.2" relative="1" as="geometry"/>
+            </mxCell>
+          </mxCell>
+        </mxCell>
+
+        <mxCell id="13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="5" target="6">
+          <mxGeometry relative="1" as="geometry"/>
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;" vertex="1" connectable="0" parent="13">
+            <mxGeometry x="0" y="-0.2" relative="1" as="geometry"/>
+            <mxCell value="Load Count Data" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="13">
+              <mxGeometry x="0.5" y="-0.2" relative="1" as="geometry"/>
+            </mxCell>
+          </mxCell>
+        </mxCell>
+
+        <mxCell id="14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="8" target="6">
+          <mxGeometry relative="1" as="geometry"/>
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;" vertex="1" connectable="0" parent="14">
+            <mxGeometry x="0" y="0.2" relative="1" as="geometry"/>
+            <mxCell value="Review Action: Approve/Edit" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="14">
+              <mxGeometry x="0.5" y="0.2" relative="1" as="geometry"/>
+            </mxCell>
+          </mxCell>
+        </mxCell>
+
+        <mxCell id="15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="6" target="9">
+          <mxGeometry relative="1" as="geometry"/>
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;" vertex="1" connectable="0" parent="15">
+            <mxGeometry x="0" y="-0.2" relative="1" as="geometry"/>
+            <mxCell value="Final Counts + ApprovalFlag" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="15">
+              <mxGeometry x="0.5" y="-0.2" relative="1" as="geometry"/>
+            </mxCell>
+          </mxCell>
+        </mxCell>
+
+        <mxCell id="16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="9" target="7">
+          <mxGeometry relative="1" as="geometry"/>
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;" vertex="1" connectable="0" parent="16">
+            <mxGeometry x="0.5" y="0" relative="1" as="geometry"/>
+            <mxCell value="Reconciliation & Reports" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="16">
+              <mxGeometry x="0.5" y="0" relative="1" as="geometry"/>
+            </mxCell>
+          </mxCell>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
